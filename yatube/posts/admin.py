@@ -43,6 +43,24 @@ class CommentAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
+"""
+class LikeAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'post',
+        'user',
+        'is_like',
+        'like_date',
+    )
+    list_editable = ('user', 'is_like', 'like_date',)
+    search_fields = ('like_date', 'user',)
+    list_filter = ('like_date', 'user',)
+    empty_value_display = '-пусто-'
+"""
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Group, GroupAdmin)
 admin.site.register(Comment, CommentAdmin)
+"""
+admin.site.register(Like, LikeAdmin)
+"""

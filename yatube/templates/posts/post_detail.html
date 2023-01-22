@@ -45,9 +45,8 @@
       {% if post.author == user %}
         <a class="btn btn-primary" href="{% url 'posts:post_edit' post.id %}">Редактировать запись</a>
       {% endif %}
-      <div class="card my-4">
-        {% include 'posts/comments.html' %}
-      </div>
+      <h4>Комментарии:</h4>
+      {% include 'posts/comments.html' %}
     </article>
   </div>
 </div>

@@ -74,3 +74,22 @@ class Follow(models.Model):
 
     class Meta:
         ordering = ["-author"]
+
+
+"""
+class Like(models.Model):
+    post = models.ForeignKey(Post,
+                             on_delete=models.CASCADE,
+                             blank=True,
+                             null=True,
+                             related_name='likes')
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             related_name='likes'
+                             )
+    is_like = models.BooleanField(default=False)
+    like_date = models.DateTimeField()
+
+    class Meta:
+        ordering = ["-like_date"]
+"""
