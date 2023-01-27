@@ -27,9 +27,20 @@
     {% if post.group %}
       <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
     {% endif %}
-    {% if post.author != request.user and user.is_authenticated %}
-      {% include 'likes/post_likes.html' with post_id=post.id %}
-    {% endif %}
+    <div class="row">
+      <div class="col-2">
+        <div>
+          {% if post.author != request.user and user.is_authenticated %}
+            {% include 'likes/post_likes.html' with post_id=post.id %}
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-2">
+        <div>
+          <a href="{% url 'posts:post_detail' post.pk %}">Комментарии: {{ post.comments.count }}</a>
+        </div>
+      </div>
+    </div>
     {% if not forloop.last %}<hr>{% endif %}
   {% endfor %}
   <script>
