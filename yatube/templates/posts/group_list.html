@@ -16,6 +16,11 @@
     </p>
     {% for post in page_obj %}
     <article>
+      {% if post.title %}
+        <p>
+          <h4>{{ post.title }}</h4>
+        </p>
+      {% endif %}
       <ul>
         <li>
           Автор: {{ post.author.get_full_name }}

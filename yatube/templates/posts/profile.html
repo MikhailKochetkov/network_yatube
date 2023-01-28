@@ -37,6 +37,11 @@
     </div>
     {% for post in page_obj %}
       <article>
+        {% if post.title %}
+        <p>
+          <h4>{{ post.title }}</h4>
+        </p>
+        {% endif %}
         <ul>
           <li>
             Дата публикации: {{ post.pub_date|date:"d E Y" }}
