@@ -29,6 +29,7 @@ urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),
     path('about/', include('about.urls', namespace='about')),
     path('likes/', include('likes.urls', namespace='likes')),
+    path('api/', include('api.urls')),
 ]
 
 if settings.DEBUG:
