@@ -1,9 +1,12 @@
 from django.urls import include, path
 
-from rest_framework.authtoken import views
 from rest_framework import routers
 
-from .views import PostViewSet, GroupViewSet, CommentViewSet, LikeViewSet
+from .views import (PostViewSet,
+                    GroupViewSet,
+                    CommentViewSet,
+                    FollowViewSet,
+                    LikeViewSet)
 
 router = routers.DefaultRouter()
 router.register(r'posts/(?P<post_id>\d+)/comments',
@@ -11,9 +14,10 @@ router.register(r'posts/(?P<post_id>\d+)/comments',
                 basename='comment')
 router.register(r'posts', PostViewSet, basename='posts')
 router.register(r'groups', GroupViewSet, basename='groups')
+router.register(r'follow', FollowViewSet, basename='follow')
 router.register(r'likes', LikeViewSet, basename='likes')
 
 urlpatterns = [
-    path('v1/api-token-auth/', views.obtain_auth_token),
+    path('v1/', include('djoser.urls.jwt')),
     path('v1/', include(router.urls)),
 ]

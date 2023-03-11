@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 handler404 = 'core.views.page_not_found'
 handler500 = 'core.views.server_error'
@@ -30,6 +31,11 @@ urlpatterns = [
     path('about/', include('about.urls', namespace='about')),
     path('likes/', include('likes.urls', namespace='likes')),
     path('api/', include('api.urls')),
+    path(
+        'redoc/',
+        TemplateView.as_view(template_name='redoc.html'),
+        name='redoc'
+    ),
 ]
 
 if settings.DEBUG:
