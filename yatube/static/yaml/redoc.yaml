@@ -844,6 +844,22 @@ paths:
           description: Передан невалидный токен
       tags:
         - api
+  /api/v1/likes/:
+    get:
+      operationId: Количество лайков
+      description: Получение количества лайков для постов.
+      parameters: [ ]
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Like'
+          description: Удачное выполнение запроса
+      tags:
+        - api
 components:
   schemas:
     Post:
@@ -998,3 +1014,12 @@ components:
       properties:
         access:
           type: string
+    Like:
+      type: object
+      properties:
+        post_id:
+          type: integer
+          readOnly: true
+        count_likes:
+          type: integer
+          readOnly: true
