@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.db.models import Count
 
 from rest_framework import viewsets, filters
 from rest_framework.permissions import (IsAuthenticated,
@@ -60,5 +61,9 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class LikeViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = PostLike.objects.all()
+    queryset = (PostLike.objects
+                .values('post_id')
+                .annotate(count_likes=Count('is_like'))
+                .order_by()
+                )
     serializer_class = LikeSerializer
