@@ -67,3 +67,4 @@ class LikeViewSet(viewsets.ReadOnlyModelViewSet):
                 .order_by()
                 )
     serializer_class = LikeSerializer
+    pagination_class = LimitOffsetPagination
