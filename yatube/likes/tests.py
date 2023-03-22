@@ -55,14 +55,35 @@ class PostLikeTest(TestCase):
         ).exists())
         self.assertEqual(like_count + 1, new_like_count)
 
-    @unittest.skip('Пропускаем тест')
     def test_remove_like(self):
         """
         Проверка удаления лайка.
         """
-        pass
+        like_count = PostLike.objects.filter(
+            post=self.post,
+            user=self.first_user.id
+        ).count()
+        post_likes_id = PostLike.objects.get(
+            post__id=self.post.id,
+            user=self.first_user.id
+        ).id
+        like_data = {'post_id': self.post,
+                     'user_id': self.first_user.id,
+                     'post_likes_id': post_likes_id,
+                     'url_from': '/'}
+        response = self.first_authorized_client.post(
+            reverse('likes:remove'), data=like_data, follow=True)
+        new_like_count = PostLike.objects.filter(
+            post=self.post,
+            user=self.first_user.id
+        ).count()
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertFalse(PostLike.objects.filter(
+            post=like_data['post_id'],
+            user=like_data['user_id']
+        ).exists())
+        self.assertNotEqual(like_count, new_like_count)
 
-    @unittest.skip('Пропускаем тест')
     def test_guest_client_not_add_like(self):
         """
         Проверка запрета добавления лайка
