@@ -25,7 +25,7 @@ class PostLikeTest(TestCase):
                                        group=cls.group)
         cls.like = PostLike.objects.create(post=cls.post,
                                            user=cls.first_user,
-                                           is_like=1)
+                                           is_like=True)
 
     def setUp(self):
         self.author_authorized_client = Client()
@@ -39,20 +39,21 @@ class PostLikeTest(TestCase):
         """
         Проверка добавления лайка.
         """
-        like_count = PostLike.objects.count()
-        form_data = {'post_id': self.post.id,
+        like_count = PostLike.objects.filter(post=self.post).count()
+        like_data = {'post_id': self.post.id,
                      'user_id': self.second_user.id,
-                     'is_like': True}
+                     'is_like': True,
+                     'url_from': '/'}
         response = self.second_authorized_client.post(
-            reverse('likes:add'), data=form_data, follow=True)
+            reverse('likes:add'), data=like_data, follow=True)
+        new_like_count = PostLike.objects.filter(post=self.post).count()
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTrue(PostLike.objects.filter(
-            post=form_data['post_id'],
-            user=form_data['user_id'],
-            is_like=True
+            post=like_data['post_id'],
+            user=like_data['user_id'],
+            is_like=like_data['is_like']
         ).exists())
-        self.assertEqual(PostLike.objects.count(),
-                         like_count + 1)
+        self.assertEqual(like_count + 1, new_like_count)
 
     @unittest.skip('Пропускаем тест')
     def test_remove_like(self):
